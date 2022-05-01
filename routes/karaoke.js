@@ -106,4 +106,61 @@ router.patch("/update", (req, res) => {
 
 // UPDATE KARAOKE
 
+// GET KARAOKE WITH ARTIST, ALBUM, NAME, etc
+router.get("/", (req, res) => {
+  const { album, artist, name } = req.query;
+
+  if (album) {
+    db.query(
+      `select * from all_karaoke where album = "${album}"`,
+      (err, result) => {
+        if (err) {
+          res.status(500);
+          res.json({
+            ok: false,
+            message: "Error while getting data",
+          });
+        } else {
+          res.status(200);
+          res.json(result);
+        }
+      }
+    );
+  } else if (artist) {
+    db.query(
+      `select * from all_karaoke where artist = "${artist}"`,
+      (err, result) => {
+        if (err) {
+          res.status(500);
+          res.json({
+            ok: false,
+            message: "Error while getting data",
+          });
+        } else {
+          res.status(200);
+          res.json(result);
+        }
+      }
+    );
+  } else {
+    db.query(
+      `select * from all_karaoke where name = "${name}"`,
+      (err, result) => {
+        if (err) {
+          res.status(500);
+          res.json({
+            ok: false,
+            message: "Error while getting data",
+          });
+        } else {
+          res.status(200);
+          res.json(result);
+        }
+      }
+    );
+  }
+});
+
+// GET KARAOKE WITH ARTIST, ALBUM, NAME, etc
+
 module.exports = router;

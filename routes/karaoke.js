@@ -108,7 +108,7 @@ router.patch("/update", (req, res) => {
 
 // GET KARAOKE WITH ARTIST, ALBUM, NAME, etc
 router.get("/", (req, res) => {
-  const { album, artist, name } = req.query;
+  const { album, artist, name, kid } = req.query;
 
   if (album) {
     db.query(
@@ -142,9 +142,25 @@ router.get("/", (req, res) => {
         }
       }
     );
-  } else {
+  } else if(name) {
     db.query(
       `select * from all_karaoke where name = "${name}"`,
+      (err, result) => {
+        if (err) {
+          res.status(500);
+          res.json({
+            ok: false,
+            message: "Error while getting data",
+          });
+        } else {
+          res.status(200);
+          res.json(result);
+        }
+      }
+    );
+  } else if(kid){
+    db.query(
+      `select * from all_karaoke where kid = ${kid}`,
       (err, result) => {
         if (err) {
           res.status(500);

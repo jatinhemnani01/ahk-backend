@@ -6,11 +6,13 @@ const app = express();
 
 // ROUTES
 const karaoke = require("./routes/karaoke");
+const create = require("./routes/create")
 // ROUTES
 
 // USE OF ROUTES
 app.use(express.json());
 app.use("/karaoke", karaoke);
+app.use("/create",create);
 // USE OF ROUTES
 
 app.get("/", (req, res) => {

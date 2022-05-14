@@ -20,7 +20,24 @@ router.get("/all", (req, res) => {
   });
 });
 
-// GET ALL KARAOKE
+// GET SINGLE KARAOKE WITH KID
+router.get("/", (req, res) => {
+  const { kid } = req.query;
+  const query = `select * from all_karaoke where kid = ${kid}`;
+
+  db.query(query, (err, result) => {
+    if (err) {
+      res.status(500);
+      res.json({ ok: false, message: "Server Error" });
+    } else {
+      res.status(200);
+      res.json({
+        ok:true,
+        data:result
+      });
+    }
+  });
+});
 
 // ADD KARAOKE TO DB
 router.post("/add_karaoke", (req, res) => {
@@ -51,8 +68,6 @@ router.post("/add_karaoke", (req, res) => {
   });
 });
 
-// ADD KARAOKE TO DB
-
 // DELETE KARAOKE FROM DB
 
 router.delete("/delete/:id", (req, res) => {
@@ -76,8 +91,6 @@ router.delete("/delete/:id", (req, res) => {
     }
   });
 });
-
-// DELETE KARAOKE FROM DB
 
 // UPDATE KARAOKE
 router.patch("/update", (req, res) => {
@@ -103,8 +116,6 @@ router.patch("/update", (req, res) => {
     }
   });
 });
-
-// UPDATE KARAOKE
 
 // GET KARAOKE WITH ARTIST, ALBUM, NAME, etc
 router.get("/", (req, res) => {
@@ -142,7 +153,7 @@ router.get("/", (req, res) => {
         }
       }
     );
-  } else if(name) {
+  } else if (name) {
     db.query(
       `select * from all_karaoke where name = "${name}"`,
       (err, result) => {
@@ -158,25 +169,20 @@ router.get("/", (req, res) => {
         }
       }
     );
-  } else if(kid){
-    db.query(
-      `select * from all_karaoke where kid = ${kid}`,
-      (err, result) => {
-        if (err) {
-          res.status(500);
-          res.json({
-            ok: false,
-            message: "Error while getting data",
-          });
-        } else {
-          res.status(200);
-          res.json(result);
-        }
+  } else if (kid) {
+    db.query(`select * from all_karaoke where kid = ${kid}`, (err, result) => {
+      if (err) {
+        res.status(500);
+        res.json({
+          ok: false,
+          message: "Error while getting data",
+        });
+      } else {
+        res.status(200);
+        res.json(result);
       }
-    );
+    });
   }
 });
-
-// GET KARAOKE WITH ARTIST, ALBUM, NAME, etc
 
 module.exports = router;

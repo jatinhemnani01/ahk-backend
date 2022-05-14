@@ -11,7 +11,10 @@ router.get("/",(req,res)=>{
             res.json({ok:false,message:"Server Error"})
         } else {
             res.status(200)
-            res.json(result);
+            res.json({
+                ok:true,
+                data:result
+            });
         }
     })
 

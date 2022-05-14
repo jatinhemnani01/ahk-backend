@@ -7,12 +7,14 @@ const app = express();
 // ROUTES
 const karaoke = require("./routes/karaoke");
 const create = require("./routes/create")
+const search = require("./routes/search")
 // ROUTES
 
 // USE OF ROUTES
 app.use(express.json());
 app.use("/karaoke", karaoke);
 app.use("/create",create);
+app.use("/search",search)
 // USE OF ROUTES
 
 app.get("/", (req, res) => {

@@ -8,13 +8,15 @@ const app = express();
 const karaoke = require("./routes/karaoke");
 const create = require("./routes/create")
 const search = require("./routes/search")
+const trending = require("./routes/trending")
 // ROUTES
 
 // USE OF ROUTES
 app.use(express.json());
 app.use("/karaoke", karaoke);
 app.use("/create",create);
-app.use("/search",search)
+app.use("/search",search);
+app.use("/trending",trending);
 // USE OF ROUTES
 
 app.get("/", (req, res) => {

@@ -8,7 +8,8 @@ const app = express();
 const karaoke = require("./routes/karaoke");
 const create = require("./routes/create")
 const search = require("./routes/search")
-const trending = require("./routes/trending")
+const trending_karaoke = require("./routes/trending_karaoke")
+const new_karaoke = require("./routes/new_karaoke")
 // ROUTES
 
 // USE OF ROUTES
@@ -16,7 +17,8 @@ app.use(express.json());
 app.use("/karaoke", karaoke);
 app.use("/create",create);
 app.use("/search",search);
-app.use("/trending",trending);
+app.use("/trending_karaoke",trending_karaoke);
+app.use("/new_karaoke",new_karaoke);
 // USE OF ROUTES
 
 app.get("/", (req, res) => {

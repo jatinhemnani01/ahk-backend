@@ -35,11 +35,11 @@ router.post("/table_all_karaoke", (req, res) => {
 });
 
 // CREATE trending TABLE
-router.post("/table_trending", (req, res) => {
-  const q = `CREATE TABLE trending (
-  tid int NOT NULL AUTO_INCREMENT,
+router.post("/table_trending_karaoke", (req, res) => {
+  const q = `CREATE TABLE trending_karaoke (
+  id int NOT NULL AUTO_INCREMENT,
   kid int NOT NULL,
-  PRIMARY KEY (tid)
+  PRIMARY KEY (id)
   )`;
 
   db.query(q, (err, result) => {
@@ -61,5 +61,30 @@ router.post("/table_trending", (req, res) => {
   });
 });
 
+// CREATE new_karaoke TABLE
+router.post("/table_new_karaoke", (req, res) => {
+  const q = `CREATE TABLE new_karaoke (
+  id int NOT NULL AUTO_INCREMENT,
+  kid int NOT NULL,
+  PRIMARY KEY (id)
+  )`;
 
+  db.query(q, (err, result) => {
+    if (err) {
+      res.status(500);
+      if (err.code === "ER_TABLE_EXISTS_ERROR") {
+        res.json({
+          ok: false,
+          message: "Table Already Exists",
+        });
+      }
+    } else {
+      res.status(200);
+      res.json({
+        ok: true,
+        message: "Table Created!",
+      });
+    }
+  });
+});
 module.exports = router;

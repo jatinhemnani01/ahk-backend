@@ -9,11 +9,9 @@ router.get("/", (req, res) => {
     if (err) {
       res.status(500);
       res.json({ ok: false, message: "Server Error" });
-      console.log(err);
     } else {
       res.status(200);
       res.json(result);
-      console.log(result);
     }
   });
 });

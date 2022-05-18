@@ -20,24 +20,6 @@ router.get("/all", (req, res) => {
   });
 });
 
-// GET SINGLE KARAOKE WITH KID
-router.get("/", (req, res) => {
-  const { kid } = req.query;
-  const query = `select * from all_karaoke where kid = ${kid}`;
-
-  db.query(query, (err, result) => {
-    if (err) {
-      res.status(500);
-      res.json({ ok: false, message: "Server Error" });
-    } else {
-      res.status(200);
-      res.json({
-        ok:true,
-        data:result
-      });
-    }
-  });
-});
 
 // ADD KARAOKE TO DB
 router.post("/add_karaoke", (req, res) => {
@@ -126,6 +108,7 @@ router.get("/", (req, res) => {
       `select * from all_karaoke where album = "${album}"`,
       (err, result) => {
         if (err) {
+          console.log(err);
           res.status(500);
           res.json({
             ok: false,

@@ -4,7 +4,10 @@ const db = require("../db/db");
 
 // GET ALL KARAOKE
 router.get("/all", (req, res) => {
-  db.query("select * from all_karaoke;", (err, result) => {
+  const {page,limit}=req.query;
+  const start_index=(page-1) * limit;
+  const end_index=10;
+  db.query(`select * from all_karaoke limit ${start_index},${end_index}`, (err, result) => {
     if (err) {
       res.status(500);
       res.json({

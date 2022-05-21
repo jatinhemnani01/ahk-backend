@@ -6,7 +6,7 @@ const db = require("../db/db");
 router.get("/all", (req, res) => {
   const { page, limit } = req.query;
   const start_index = (page - 1) * limit;
-  const end_index = 10;
+  const end_index = limit;
   db.query(
     `select kid,name,artist,album_cover_art,year from all_karaoke ORDER BY kid desc limit ${start_index},${end_index}`,
     (err, result) => {
@@ -111,73 +111,97 @@ router.patch("/update", (req, res) => {
   });
 });
 
-// GET KARAOKE WITH ARTIST, ALBUM, NAME, etc
-router.get("/", (req, res) => {
-  const { album, artist, name, kid } = req.query;
+// GET KARAOKE WITH ALBUM
+router.get("/album", (req, res) => {
+  const { q, page, limit } = req.query;
+  const start_index = (page - 1) * limit;
+  const end_index = limit;
 
-  if (album) {
-    db.query(
-      `select * from all_karaoke where album = "${album}"`,
-      (err, result) => {
-        if (err) {
-          console.log(err);
-          res.status(500);
-          res.json({
-            ok: false,
-            message: "Error while getting data",
-          });
-        } else {
-          res.status(200);
-          res.json(result);
-        }
-      }
-    );
-  } else if (artist) {
-    db.query(
-      `select * from all_karaoke where artist = "${artist}"`,
-      (err, result) => {
-        if (err) {
-          res.status(500);
-          res.json({
-            ok: false,
-            message: "Error while getting data",
-          });
-        } else {
-          res.status(200);
-          res.json(result);
-        }
-      }
-    );
-  } else if (name) {
-    db.query(
-      `select * from all_karaoke where name = "${name}"`,
-      (err, result) => {
-        if (err) {
-          res.status(500);
-          res.json({
-            ok: false,
-            message: "Error while getting data",
-          });
-        } else {
-          res.status(200);
-          res.json(result);
-        }
-      }
-    );
-  } else if (kid) {
-    db.query(`select * from all_karaoke where kid = ${kid}`, (err, result) => {
-      if (err) {
-        res.status(500);
-        res.json({
-          ok: false,
-          message: "Error while getting data",
-        });
-      } else {
-        res.status(200);
-        res.json(result[0]);
-      }
-    });
-  }
+  const query = `select * from all_karaoke where album="${q}" ORDER BY kid desc limit ${start_index},${end_index}`;
+
+  db.query(query, (err, result) => {
+    if (err) {
+      res.status(500);
+      console.log(err);
+      res.json({
+        ok: false,
+        message: err.code,
+      });
+    } else if (result.length === 0) {
+      res.status(500);
+      res.json({
+        ok: false,
+        message: "No More Data!",
+      });
+    } else {
+      res.status(200);
+      res.json({
+        ok: true,
+        data: result,
+      });
+    }
+  });
+});
+
+// GET KARAOKE WITH ARTIST
+router.get("/artist", (req, res) => {
+  const { q, page, limit } = req.query;
+  const start_index = (page - 1) * limit;
+  const end_index = limit;
+
+  const query = `select * from all_karaoke where artist="${q}" ORDER BY kid desc limit ${start_index},${end_index}`;
+
+  db.query(query, (err, result) => {
+    if (err) {
+      res.status(500);
+      console.log(err);
+      res.json({
+        ok: false,
+        message: err.code,
+      });
+    } else if (result.length === 0) {
+      res.status(500);
+      res.json({
+        ok: false,
+        message: "No More Data!",
+      });
+    } else {
+      res.status(200);
+      res.json({
+        ok: true,
+        data: result,
+      });
+    }
+  });
+});
+
+// GET KARAOKE WITH KID
+router.get("/kid", (req, res) => {
+  const { q } = req.query;
+
+  const query = `select * from all_karaoke where kid = ${q}`;
+
+  db.query(query, (err, result) => {
+    if (err) {
+      res.status(500);
+      res.json({
+        ok: false,
+        message: err.code,
+      });
+    } else if (result.length === 0) {
+      res.status(500);
+      res.json({
+        ok: false,
+        message: "Doesn't Exist!",
+      });
+    } else {
+      res.status(200);
+      res.json({
+        ok: true,
+        data: result[0],
+      });
+    }
+  });
 });
 
 module.exports = router;

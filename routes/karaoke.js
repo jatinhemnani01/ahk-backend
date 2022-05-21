@@ -16,12 +16,6 @@ router.get("/all", (req, res) => {
           ok: false,
         });
         return;
-      } else if (result.length === 0) {
-        res.status(500);
-        res.json({
-          ok: false,
-          message: "No More Data!",
-        });
       } else {
         res.status(200);
         res.json({
@@ -127,12 +121,6 @@ router.get("/album", (req, res) => {
         ok: false,
         message: err.code,
       });
-    } else if (result.length === 0) {
-      res.status(500);
-      res.json({
-        ok: false,
-        message: "No More Data!",
-      });
     } else {
       res.status(200);
       res.json({
@@ -159,12 +147,6 @@ router.get("/artist", (req, res) => {
         ok: false,
         message: err.code,
       });
-    } else if (result.length === 0) {
-      res.status(500);
-      res.json({
-        ok: false,
-        message: "No More Data!",
-      });
     } else {
       res.status(200);
       res.json({
@@ -187,12 +169,6 @@ router.get("/kid", (req, res) => {
       res.json({
         ok: false,
         message: err.code,
-      });
-    } else if (result.length === 0) {
-      res.status(500);
-      res.json({
-        ok: false,
-        message: "Doesn't Exist!",
       });
     } else {
       res.status(200);

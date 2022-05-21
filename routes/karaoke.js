@@ -4,25 +4,34 @@ const db = require("../db/db");
 
 // GET ALL KARAOKE
 router.get("/all", (req, res) => {
-  const {page,limit}=req.query;
-  const start_index=(page-1) * limit;
-  const end_index=10;
-  db.query(`select * from all_karaoke limit ${start_index},${end_index}`, (err, result) => {
-    if (err) {
-      res.status(500);
-      res.json({
-        ok: false,
-      });
-      return;
+  const { page, limit } = req.query;
+  const start_index = (page - 1) * limit;
+  const end_index = 10;
+  db.query(
+    `select kid,name,artist,album_cover_art,year from all_karaoke ORDER BY kid desc limit ${start_index},${end_index}`,
+    (err, result) => {
+      if (err) {
+        res.status(500);
+        res.json({
+          ok: false,
+        });
+        return;
+      } else if (result.length === 0) {
+        res.status(500);
+        res.json({
+          ok: false,
+          message: "No More Data!",
+        });
+      } else {
+        res.status(200);
+        res.json({
+          ok: true,
+          data: result,
+        });
+      }
     }
-    res.status(200);
-    res.json({
-      ok: true,
-      data: result,
-    });
-  });
+  );
 });
-
 
 // ADD KARAOKE TO DB
 router.post("/add_karaoke", (req, res) => {

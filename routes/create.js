@@ -9,7 +9,7 @@ router.post("/table_all_karaoke", (req, res) => {
   name varchar(100) NOT NULL,
   artist varchar(100) NOT NULL,
   album varchar(100) NOT NULL,
-  year date NOT NULL,
+  year varchar(10) NOT NULL,
   album_cover_art varchar(100) DEFAULT NULL,
   duet tinyint(1) DEFAULT NULL,
   PRIMARY KEY (kid)

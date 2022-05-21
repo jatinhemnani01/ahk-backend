@@ -10,6 +10,7 @@ const create = require("./routes/create")
 const search = require("./routes/search")
 const trending_karaoke = require("./routes/trending_karaoke")
 const new_karaoke = require("./routes/new_karaoke")
+const popular_karaoke = require("./routes/popular_karaoke");
 // ROUTES
 
 // USE OF ROUTES
@@ -19,6 +20,7 @@ app.use("/create",create);
 app.use("/search",search);
 app.use("/trending_karaoke",trending_karaoke);
 app.use("/new_karaoke",new_karaoke);
+app.use("/popular_karaoke",popular_karaoke)
 // USE OF ROUTES
 
 app.get("/", (req, res) => {

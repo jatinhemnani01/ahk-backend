@@ -87,4 +87,33 @@ router.post("/table_new_karaoke", (req, res) => {
     }
   });
 });
+
+
+
+// CREATE popular_karaoke TABLE
+router.post("/table_popular_karaoke", (req, res) => {
+  const q = `CREATE TABLE popular_karaoke (
+  id int NOT NULL AUTO_INCREMENT,
+  kid int NOT NULL,
+  PRIMARY KEY (id)
+  )`;
+
+  db.query(q, (err, result) => {
+    if (err) {
+      res.status(500);
+      if (err.code === "ER_TABLE_EXISTS_ERROR") {
+        res.json({
+          ok: false,
+          message: "Table Already Exists",
+        });
+      }
+    } else {
+      res.status(200);
+      res.json({
+        ok: true,
+        message: "Table Created!",
+      });
+    }
+  });
+});
 module.exports = router;

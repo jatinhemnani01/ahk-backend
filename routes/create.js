@@ -124,6 +124,7 @@ router.post("/table_artists", (req, res) => {
     name varchar(100) NOT NULL,
     id int NOT NULL AUTO_INCREMENT,
     artist_image varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    trending tinyint(1) NOT NULL,
     PRIMARY KEY (id)
   )`;
 

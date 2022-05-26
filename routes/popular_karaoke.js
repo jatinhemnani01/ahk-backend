@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db/db");
 
+// GET ALL popular_karaoke
 router.get("/", (req, res) => {
 
-  const popular_query = `select kid,artist,name,album_cover_art,album from all_karaoke where kid IN(select kid from popular_karaoke);`;
-  db.query(popular_query, (err, result) => {
+  const popular_karaoke = `select ak.kid,artist,name,album_cover_art,album,year from all_karaoke ak
+  join popular_karaoke nk on ak.kid=nk.kid order by kid desc`;
+  db.query(popular_karaoke, (err, result) => {
     if (err) {
       res.status(500);
       res.json({ ok: false, message: "Server Error" });
@@ -18,5 +20,42 @@ router.get("/", (req, res) => {
     }
   });
 });
+
+
+// DELETE popular_karaoke
+router.delete("/:kid", (req, res) => {
+  const {kid}=req.params;
+  const popular_karaoke = `delete from popular_karaoke where kid = ${kid}`;
+  db.query(popular_karaoke, (err, result) => {
+    if (err) {
+      res.status(500);
+      res.json({ ok: false, message: "Server Error" });
+    } else {
+      res.status(200);
+      res.json({
+        ok:true,
+        message:"Deleted from db!"
+      });
+    }
+  });
+});
+
+router.post("/", (req, res) => {
+  const {kid} = req.body;
+  const popular_karaoke = `insert into popular_karaoke(kid) values(${kid})`;
+  db.query(popular_karaoke, (err, result) => {
+    if (err) {
+      res.status(500);
+      res.json({ ok: false, message: "Server Error" });
+    } else {
+      res.status(200);
+      res.json({
+        ok:true,
+        message:"Added to db!"
+      });
+    }
+  });
+});
+
 
 module.exports = router;

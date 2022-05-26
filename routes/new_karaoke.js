@@ -4,7 +4,8 @@ const db = require("../db/db");
 
 router.get("/", (req, res) => {
 
-  const new_karaoke = `select kid,artist,name,album_cover_art,album from all_karaoke where kid IN(select kid from new_karaoke);`;
+  const new_karaoke = `select ak.kid,artist,name,album_cover_art,album,year from all_karaoke ak
+  join new_karaoke nk on ak.kid=nk.kid;`;
   db.query(new_karaoke, (err, result) => {
     if (err) {
       res.status(500);

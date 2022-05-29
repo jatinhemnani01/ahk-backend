@@ -12,6 +12,7 @@ router.post("/table_all_karaoke", (req, res) => {
   year varchar(10) NOT NULL,
   album_cover_art varchar(1000) DEFAULT NULL,
   duet tinyint(1) DEFAULT NULL,
+  date_added varchar(40) NOT NULL,
   PRIMARY KEY (kid)
   )`;
 
@@ -61,35 +62,6 @@ router.post("/table_trending_karaoke", (req, res) => {
   });
 });
 
-// CREATE new_karaoke TABLE
-router.post("/table_new_karaoke", (req, res) => {
-  const q = `CREATE TABLE new_karaoke (
-  id int NOT NULL AUTO_INCREMENT,
-  kid int NOT NULL,
-  PRIMARY KEY (id)
-  )`;
-
-  db.query(q, (err, result) => {
-    if (err) {
-      res.status(500);
-      if (err.code === "ER_TABLE_EXISTS_ERROR") {
-        res.json({
-          ok: false,
-          message: "Table Already Exists",
-        });
-      }
-    } else {
-      res.status(200);
-      res.json({
-        ok: true,
-        message: "Table Created!",
-      });
-    }
-  });
-});
-
-
-
 // CREATE popular_karaoke TABLE
 router.post("/table_popular_karaoke", (req, res) => {
   const q = `CREATE TABLE popular_karaoke (
@@ -117,8 +89,7 @@ router.post("/table_popular_karaoke", (req, res) => {
   });
 });
 
-
-// CREATE artists TABLE 
+// CREATE artists TABLE
 router.post("/table_artists", (req, res) => {
   const q = `CREATE TABLE artists (
     name varchar(100) NOT NULL,

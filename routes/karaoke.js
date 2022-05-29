@@ -38,6 +38,7 @@ router.post("/add_karaoke", (req, res) => {
     year,
     album_cover_art,
     duet,
+    date_added:new Date().toLocaleDateString()
   };
 
   db.query("insert into `ahk-db`.all_karaoke SET ?", karaoke, (err, result) => {

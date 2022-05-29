@@ -1,5 +1,6 @@
 // imports
 const express = require("express");
+const cors=require('cors');
 const db = require("./db/db");
 const app = express();
 // imports
@@ -16,6 +17,8 @@ const artists = require("./routes/artists");
 
 // USE OF ROUTES
 app.use(express.json());
+app.use(cors());
+
 app.use("/karaoke", karaoke);
 app.use("/create",create);
 app.use("/search",search);

@@ -16,10 +16,7 @@ router.get("/name", (req, res) => {
         res.json({ ok: false, message: err.code });
       } else {
         res.status(200);
-        res.json({
-          ok: true,
-          data: result,
-        });
+        res.json(result);
       }
     }
   );
@@ -39,10 +36,7 @@ router.get("/artist", (req, res) => {
           res.json({ ok: false, message: err.code });
         } else {
           res.status(200);
-          res.json({
-            ok: true,
-            data: result,
-          });
+          res.json(result);
         }
       }
     );
@@ -62,10 +56,7 @@ router.get("/album", (req, res) => {
           res.json({ ok: false, message: err.code });
         } else {
           res.status(200);
-          res.json({
-            ok: true,
-            data: result,
-          });
+          res.json(result);
         }
       }
     );

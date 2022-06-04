@@ -16,10 +16,7 @@ router.get("/", (_, res) => {
       });
     } else {
       res.status(200);
-      res.json({
-        ok: true,
-        data: result,
-      });
+      res.json(result);
     }
   });
 });

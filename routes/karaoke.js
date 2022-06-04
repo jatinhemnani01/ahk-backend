@@ -121,10 +121,7 @@ router.get("/album", (req, res) => {
       });
     } else {
       res.status(200);
-      res.json({
-        ok: true,
-        data: result,
-      });
+      res.json(result);
     }
   });
 });
@@ -147,10 +144,7 @@ router.get("/artist", (req, res) => {
       });
     } else {
       res.status(200);
-      res.json({
-        ok: true,
-        data: result,
-      });
+      res.json(result);
     }
   });
 });
@@ -170,10 +164,7 @@ router.get("/kid", (req, res) => {
       });
     } else {
       res.status(200);
-      res.json({
-        ok: true,
-        data: result[0],
-      });
+      res.json(result[0]);
     }
   });
 });

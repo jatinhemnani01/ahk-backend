@@ -11,8 +11,8 @@ router.post("/table_all_karaoke", (req, res) => {
   album varchar(100) NOT NULL,
   year varchar(10) NOT NULL,
   album_cover_art varchar(1000) DEFAULT NULL,
-  duet tinyint(1) DEFAULT NULL,
   date_added varchar(40) NOT NULL,
+  gid varchar(100) NOT NULL,
   PRIMARY KEY (kid)
   )`;
 

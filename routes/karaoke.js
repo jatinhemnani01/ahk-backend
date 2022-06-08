@@ -8,7 +8,7 @@ router.get("/all", (req, res) => {
   const start_index = (page - 1) * limit;
   const end_index = limit;
   db.query(
-    `select kid,name,artist,album_cover_art,year from all_karaoke ORDER BY kid desc limit ${start_index},${end_index}`,
+    `select kid,name,artist,album_cover_art,year,gid from all_karaoke ORDER BY kid desc limit ${start_index},${end_index}`,
     (err, result) => {
       if (err) {
         res.status(500);
@@ -26,7 +26,7 @@ router.get("/all", (req, res) => {
 
 // ADD KARAOKE TO DB
 router.post("/add_karaoke", (req, res) => {
-  const { name, artist, album, year, album_cover_art, duet } = req.body;
+  const { name, artist, album, year, album_cover_art,gid } = req.body;
 
   const karaoke = {
     name,
@@ -34,7 +34,7 @@ router.post("/add_karaoke", (req, res) => {
     album,
     year,
     album_cover_art,
-    duet,
+    gid,
     date_added:new Date().toLocaleDateString()
   };
 
@@ -80,11 +80,11 @@ router.delete("/delete/:id", (req, res) => {
 
 // UPDATE KARAOKE
 router.patch("/update", (req, res) => {
-  const { kid, name, artist, album, year, album_cover_art, duet } = req.body;
+  const { kid, name, artist, album, year, album_cover_art, gid } = req.body;
 
   const query =
-    "update all_karaoke set name=?, artist=?,album=?,year=?,album_cover_art=?,duet=? where kid=?";
-  const data = [name, artist, album, year, album_cover_art, duet, kid];
+    "update all_karaoke set name=?, artist=?,album=?,year=?,album_cover_art=?,gid=? where kid=?";
+  const data = [name, artist, album, year, album_cover_art, gid, kid ];
 
   db.query(query, data, (err, result) => {
     if (err) {

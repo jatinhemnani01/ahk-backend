@@ -8,7 +8,7 @@ router.get("/all", (req, res) => {
   const start_index = (page - 1) * limit;
   const end_index = limit;
   db.query(
-    `select kid,name,artist,album_cover_art,year,gid from all_karaoke ORDER BY kid desc limit ${start_index},${end_index}`,
+    `select kid,name,artist,album,album_cover_art,year,gid from all_karaoke ORDER BY kid desc limit ${start_index},${end_index}`,
     (err, result) => {
       if (err) {
         res.status(500);

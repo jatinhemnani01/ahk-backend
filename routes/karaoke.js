@@ -8,7 +8,7 @@ router.get("/all", (req, res) => {
   const start_index = (page - 1) * limit;
   const end_index = limit;
   db.query(
-    `select kid,name,artist,album,album_cover_art,year,gid from all_karaoke ORDER BY kid desc limit ${start_index},${end_index}`,
+    `select kid,name,artist,album,album_cover_art,year,gid,category from all_karaoke ORDER BY kid desc limit ${start_index},${end_index}`,
     (err, result) => {
       if (err) {
         res.status(500);
@@ -26,7 +26,7 @@ router.get("/all", (req, res) => {
 
 // ADD KARAOKE TO DB
 router.post("/add_karaoke", (req, res) => {
-  const { name, artist, album, year, album_cover_art,gid } = req.body;
+  const { name, artist, album, year, album_cover_art,gid,category } = req.body;
 
   const karaoke = {
     name,
@@ -35,6 +35,7 @@ router.post("/add_karaoke", (req, res) => {
     year,
     album_cover_art,
     gid,
+    category,
     date_added:new Date().toLocaleDateString()
   };
 

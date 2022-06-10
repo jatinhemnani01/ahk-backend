@@ -13,6 +13,7 @@ router.post("/table_all_karaoke", (req, res) => {
   album_cover_art varchar(1000) DEFAULT NULL,
   date_added varchar(40) NOT NULL,
   gid varchar(100) NOT NULL,
+  category varchar(40) NOT NULL,
   PRIMARY KEY (kid)
   )`;
 

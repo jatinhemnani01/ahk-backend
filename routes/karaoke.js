@@ -89,21 +89,25 @@ router.patch("/update", (req, res) => {
     "update all_karaoke set name=?, artist=?,album=?,year=?,album_cover_art=?,gid=?,category=? where kid=?";
   const data = [name, artist, album, year, album_cover_art, gid, category, kid];
 
-  db.query(query, data, (err, result) => {
-    if (err) {
-      res.status(400);
-      res.json({
-        ok: false,
-        message: "Error while updating data in database",
-      });
-    } else {
-      res.status(200);
-      res.json({
-        ok: true,
-        message: "data updated in the database",
-      });
-    }
-  });
+  if (kid == null || undefined || "") {
+    res.status(400).json({ ok: false, message: "provide kid to update" });
+  } else {
+    db.query(query, data, (err, result) => {
+      if (err) {
+        res.status(400);
+        res.json({
+          ok: false,
+          message: "Error while updating data in database",
+        });
+      } else {
+        res.status(200);
+        res.json({
+          ok: true,
+          message: "data updated in the database",
+        });
+      }
+    });
+  }
 });
 
 // GET KARAOKE WITH ALBUM

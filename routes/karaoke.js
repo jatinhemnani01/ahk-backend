@@ -26,7 +26,8 @@ router.get("/all", (req, res) => {
 
 // ADD KARAOKE TO DB
 router.post("/add_karaoke", (req, res) => {
-  const { name, artist, album, year, album_cover_art,gid,category } = req.body;
+  const { name, artist, album, year, album_cover_art, gid, category } =
+    req.body;
 
   const karaoke = {
     name,
@@ -36,7 +37,7 @@ router.post("/add_karaoke", (req, res) => {
     album_cover_art,
     gid,
     category,
-    date_added:new Date().toLocaleDateString()
+    date_added: new Date().toLocaleDateString(),
   };
 
   db.query("insert into `ahk-db`.all_karaoke SET ?", karaoke, (err, result) => {
@@ -81,11 +82,12 @@ router.delete("/delete/:id", (req, res) => {
 
 // UPDATE KARAOKE
 router.patch("/update", (req, res) => {
-  const { kid, name, artist, album, year, album_cover_art, gid } = req.body;
+  const { kid, name, artist, album, year, album_cover_art, gid, category } =
+    req.body;
 
   const query =
-    "update all_karaoke set name=?, artist=?,album=?,year=?,album_cover_art=?,gid=? where kid=?";
-  const data = [name, artist, album, year, album_cover_art, gid, kid ];
+    "update all_karaoke set name=?, artist=?,album=?,year=?,album_cover_art=?,gid=?,category=? where kid=?";
+  const data = [name, artist, album, year, album_cover_art, gid, category, kid];
 
   db.query(query, data, (err, result) => {
     if (err) {

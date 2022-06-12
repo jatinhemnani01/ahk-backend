@@ -3,12 +3,15 @@ const router = express.Router();
 const db = require("../db/db");
 
 // GET ALL KARAOKE
+
+const getItems="kid,name,artist,album,album_cover_art,year,gid,category"
+
 router.get("/all", (req, res) => {
   const { page, limit } = req.query;
   const start_index = (page - 1) * limit;
   const end_index = limit;
   db.query(
-    `select kid,name,artist,album,album_cover_art,year,gid,category from all_karaoke ORDER BY kid desc limit ${start_index},${end_index}`,
+    `select ${getItems} from all_karaoke ORDER BY kid desc limit ${start_index},${end_index}`,
     (err, result) => {
       if (err) {
         res.status(500);
@@ -116,7 +119,7 @@ router.get("/album", (req, res) => {
   const start_index = (page - 1) * limit;
   const end_index = limit;
 
-  const query = `select * from all_karaoke where album="${q}" ORDER BY kid desc limit ${start_index},${end_index}`;
+  const query = `select ${getItems} from all_karaoke where album="${q}" ORDER BY kid desc limit ${start_index},${end_index}`;
 
   db.query(query, (err, result) => {
     if (err) {
@@ -139,7 +142,7 @@ router.get("/artist", (req, res) => {
   const start_index = (page - 1) * limit;
   const end_index = limit;
 
-  const query = `select * from all_karaoke where artist="${q}" ORDER BY kid desc limit ${start_index},${end_index}`;
+  const query = `select ${getItems} from all_karaoke where artist="${q}" ORDER BY kid desc limit ${start_index},${end_index}`;
 
   db.query(query, (err, result) => {
     if (err) {
@@ -160,7 +163,7 @@ router.get("/artist", (req, res) => {
 router.get("/kid", (req, res) => {
   const { q } = req.query;
 
-  const query = `select * from all_karaoke where kid = ${q}`;
+  const query = `select ${getItems} from all_karaoke where kid = ${q}`;
 
   db.query(query, (err, result) => {
     if (err) {

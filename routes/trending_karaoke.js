@@ -2,10 +2,13 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db/db");
 
+const getItems="ak.kid,name,artist,album,album_cover_art,year,gid,category"
+
+
 // GET ALL trending_karaoke
 router.get("/", (req, res) => {
 
-  const trending_karaoke = `select ak.kid,artist,name,album_cover_art,album,year from all_karaoke ak
+  const trending_karaoke = `select ${getItems} from all_karaoke ak
   join trending_karaoke nk on ak.kid=nk.kid order by kid desc`;
   db.query(trending_karaoke, (err, result) => {
     if (err) {

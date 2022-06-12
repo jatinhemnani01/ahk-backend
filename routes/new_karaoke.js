@@ -2,10 +2,13 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db/db");
 
+const getItems="kid,name,artist,album,album_cover_art,year,gid,category"
+
+
 // GET ALL new_karaoke
 router.get("/", (_, res) => {
   const query =
-    "select kid,artist,name,album_cover_art,album,year from all_karaoke order by date_added desc limit 10;";
+    `select ${getItems} from all_karaoke order by date_added desc limit 10;`;
 
   db.query(query, (err, result) => {
     if (err) {

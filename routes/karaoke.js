@@ -43,7 +43,7 @@ router.post("/add_karaoke", (req, res) => {
     date_added: new Date().toLocaleDateString(),
   };
 
-  db.query("insert into `ahk-db`.all_karaoke SET ?", karaoke, (err, result) => {
+  db.query("insert into all_karaoke SET ?", karaoke, (err, result) => {
     if (err) {
       res.status(500);
       res.json({

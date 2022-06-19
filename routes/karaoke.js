@@ -16,6 +16,7 @@ router.get("/all", (req, res) => {
     (err, result) => {
       if (err) {
         res.status(500);
+	      console.log(err);
         res.json({
           ok: false,
         });

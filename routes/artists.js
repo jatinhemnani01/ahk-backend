@@ -8,6 +8,7 @@ router.get("/", (req, res) => {
   db.query(artists, (err, result) => {
     if (err) {
       res.status(500);
+	    console.log(err);
       res.json({ ok: false, message: "Server Error" });
     } else {
       res.status(200);

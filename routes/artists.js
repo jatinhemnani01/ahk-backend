@@ -2,13 +2,19 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db/db");
 
+const getItems = "name,id,artist_image";
+
 // GET ALL ARTISTS
 router.get("/", (req, res) => {
-  const artists = `select name,artist_image from artists ORDER BY id desc`;
+  const artists = `select ${getItems} from artists ORDER BY id desc`;
   db.query(artists, (err, result) => {
     if (err) {
       res.status(500);
+<<<<<<< HEAD
 	    console.log(err);
+=======
+      console.log(err);
+>>>>>>> f383803f3464fa53b4edf361d857ab8324ee0f5d
       res.json({ ok: false, message: "Server Error" });
     } else {
       res.status(200);
@@ -19,7 +25,7 @@ router.get("/", (req, res) => {
 
 // GET TRENDING ARTISTS
 router.get("/trending", (req, res) => {
-  const artists = `select name,artist_image from artists where trending = 1 ORDER BY id desc`;
+  const artists = `select ${getItems} from artists where trending = 1 ORDER BY id desc`;
   db.query(artists, (err, result) => {
     if (err) {
       res.status(500);
@@ -51,31 +57,30 @@ router.post("/add", (req, res) => {
       res.status(200);
       res.json({
         ok: true,
-        message:"Added to db!"
+        message: "Added to db!",
       });
     }
   });
 });
 
-
 // DELETE ARTIST
 router.delete("/delete/:id", (req, res) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    const artists_query = `DELETE FROM artists where id = ${id}`;
-    db.query(artists_query, (err, result) => {
-      if (err) {
-        res.status(500);
-        res.json({ ok: false, message: "Server Error" });
-        console.log(err);
-      } else {
-        res.status(200);
-        res.json({
-          ok: true,
-          message:"Deleted from db!"
-        });
-      }
-    });
+  const artists_query = `DELETE FROM artists where id = ${id}`;
+  db.query(artists_query, (err, result) => {
+    if (err) {
+      res.status(500);
+      res.json({ ok: false, message: "Server Error" });
+      console.log(err);
+    } else {
+      res.status(200);
+      res.json({
+        ok: true,
+        message: "Deleted from db!",
+      });
+    }
   });
+});
 
 module.exports = router;

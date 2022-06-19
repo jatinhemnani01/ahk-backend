@@ -10,11 +10,7 @@ router.get("/", (req, res) => {
   db.query(artists, (err, result) => {
     if (err) {
       res.status(500);
-<<<<<<< HEAD
-	    console.log(err);
-=======
       console.log(err);
->>>>>>> f383803f3464fa53b4edf361d857ab8324ee0f5d
       res.json({ ok: false, message: "Server Error" });
     } else {
       res.status(200);

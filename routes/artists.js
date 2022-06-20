@@ -6,7 +6,12 @@ const getItems = "name,id,artist_image";
 
 // GET ALL ARTISTS
 router.get("/", (req, res) => {
-  const artists = `select ${getItems} from artists ORDER BY id desc`;
+  const { page, limit } = req.query;
+  const start_index = (page - 1) * limit;
+  const end_index = limit;
+
+
+  const artists = `select ${getItems} from artists ORDER BY id desc limit ${start_index}, ${end_index}`;
   db.query(artists, (err, result) => {
     if (err) {
       res.status(500);

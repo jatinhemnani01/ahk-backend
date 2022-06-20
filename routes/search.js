@@ -2,13 +2,16 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db/db");
 
+
+const getItems = "kid,name,artist,album,album_cover_art,year,gid,category";
+
 // SEARCH KARAOKE BY NAME
 router.get("/name", (req, res) => {
   const { q, page, limit } = req.query;
   const start_index = (page - 1) * limit;
   const end_index = limit;
   db.query(
-    `select name, artist, kid, album, year, album_cover_art from all_karaoke where name like "${q}%" limit ${start_index},${end_index}`,
+    `select ${getItems} from all_karaoke where name like "${q}%" limit ${start_index},${end_index}`,
     (err, result) => {
       if (err) {
         res.status(500);
@@ -28,7 +31,7 @@ router.get("/artist", (req, res) => {
     const start_index = (page - 1) * limit;
     const end_index = limit;
     db.query(
-      `select name, artist, kid, album, year, album_cover_art from all_karaoke where artist like "${q}%" order by kid desc limit ${start_index},${end_index}`,
+      `select ${getItems} from all_karaoke where artist like "${q}%" order by kid desc limit ${start_index},${end_index}`,
       (err, result) => {
         if (err) {
           res.status(500);
@@ -48,7 +51,7 @@ router.get("/album", (req, res) => {
     const start_index = (page - 1) * limit;
     const end_index = limit;
     db.query(
-      `select name, artist, kid, album, year, album_cover_art from all_karaoke where album like "${q}%" order by kid desc limit ${start_index},${end_index}`,
+      `select ${getItems} from all_karaoke where album like "${q}%" order by kid desc limit ${start_index},${end_index}`,
       (err, result) => {
         if (err) {
           res.status(500);

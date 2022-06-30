@@ -11,7 +11,7 @@ router.get("/name", (req, res) => {
   const start_index = (page - 1) * limit;
   const end_index = limit;
   db.query(
-    `select ${getItems} from all_karaoke where name like "${q}%" limit ${start_index},${end_index}`,
+    `select ${getItems} from all_karaoke where name like "%${q}%" limit ${start_index},${end_index}`,
     (err, result) => {
       if (err) {
         res.status(500);
@@ -31,7 +31,7 @@ router.get("/artist", (req, res) => {
     const start_index = (page - 1) * limit;
     const end_index = limit;
     db.query(
-      `select ${getItems} from all_karaoke where artist like "${q}%" order by kid desc limit ${start_index},${end_index}`,
+      `select ${getItems} from all_karaoke where artist like "%${q}%" order by kid desc limit ${start_index},${end_index}`,
       (err, result) => {
         if (err) {
           res.status(500);

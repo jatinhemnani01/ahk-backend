@@ -13,6 +13,7 @@ router.post("/table_all_karaoke", (req, res) => {
   date_added varchar(40) NOT NULL,
   gid varchar(100) NOT NULL,
   category varchar(40) NOT NULL,
+  views int NOT NULL,
   PRIMARY KEY (kid)
   )`;
 

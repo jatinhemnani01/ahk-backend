@@ -5,7 +5,7 @@ const { parseGid } = require("../utils/parseGid");
 
 // GET ALL KARAOKE
 
-const getItems = "kid,name,artist,album,album_cover_art,year,gid,category";
+const getItems = "kid,name,artist,album,album_cover_art,gid,category";
 
 router.get("/all", (req, res) => {
   const { page, limit } = req.query;
@@ -31,14 +31,13 @@ router.get("/all", (req, res) => {
 
 // ADD KARAOKE TO DB
 router.post("/add_karaoke", (req, res) => {
-  const { name, artist, album, year, album_cover_art, gid, category } =
+  const { name, artist, album, album_cover_art, gid, category } =
     req.body;
 
   const karaoke = {
     name,
     artist,
     album,
-    year,
     album_cover_art,
     gid: parseGid(gid),
     category,
@@ -87,16 +86,15 @@ router.delete("/delete/:id", (req, res) => {
 
 // UPDATE KARAOKE
 router.patch("/update", (req, res) => {
-  const { kid, name, artist, album, year, album_cover_art, gid, category } =
+  const { kid, name, artist, album, album_cover_art, gid, category } =
     req.body;
 
   const query =
-    "update all_karaoke set name=?, artist=?,album=?,year=?,album_cover_art=?,gid=?,category=? where kid=?";
+    "update all_karaoke set name=?, artist=?,album=?,album_cover_art=?,gid=?,category=? where kid=?";
   const data = [
     name,
     artist,
     album,
-    year,
     album_cover_art,
     parseGid(gid),
     category,

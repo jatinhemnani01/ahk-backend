@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db/db");
 
-const getItems="ak.kid,name,artist,album,album_cover_art,year,gid,category"
+const getItems="ak.kid,name,artist,album,album_cover_art,gid,category"
 
 
 // GET ALL popular_karaoke

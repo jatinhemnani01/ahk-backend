@@ -12,8 +12,6 @@ router.get("/", (req, res) => {
   join trending_karaoke nk on ak.kid=nk.kid order by kid desc`;
   db.query(trending_karaoke, (err, result) => {
     if (err) {
-      console.log(err);
-
       res.status(500);
       res.json({ ok: false, message: "Server Error" });
     } else {

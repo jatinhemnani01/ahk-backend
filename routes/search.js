@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../db/db");
 
 
-const getItems = "kid,name,artist,album,album_cover_art,gid,category";
+const getItems = "kid,name,artist,album,album_cover_art,gid,category,views";
 
 // SEARCH KARAOKE BY NAME
 router.get("/name", (req, res) => {

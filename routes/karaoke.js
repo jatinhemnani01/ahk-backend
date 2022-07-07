@@ -5,7 +5,7 @@ const { parseGid } = require("../utils/parseGid");
 
 // GET ALL KARAOKE
 
-const getItems = "kid,name,artist,album,album_cover_art,gid,category";
+const getItems = "kid,name,artist,album,album_cover_art,gid,category,views";
 
 router.get("/all", (req, res) => {
   const { page, limit } = req.query;

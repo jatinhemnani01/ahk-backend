@@ -29,6 +29,7 @@ router.post("/count", (req, res) => {
           }
         }
       );
+      console.log(newView);
     }
   });
 });

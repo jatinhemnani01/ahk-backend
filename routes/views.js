@@ -13,7 +13,6 @@ router.post("/count", (req, res) => {
 
   db.query(query, (err, result) => {
     if (err || result.length == 0) {
-      console.log(err);
       res.json({ message: "No data!" });
     } else {
       const newView = result[0].views + 1;
@@ -29,7 +28,6 @@ router.post("/count", (req, res) => {
           }
         }
       );
-      console.log(newView);
     }
   });
 });

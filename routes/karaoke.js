@@ -16,7 +16,7 @@ router.get("/all", (req, res) => {
     (err, result) => {
       if (err) {
         res.status(500);
-	      console.log(err);
+        console.log(err);
         res.json({
           ok: false,
         });
@@ -31,8 +31,7 @@ router.get("/all", (req, res) => {
 
 // ADD KARAOKE TO DB
 router.post("/add_karaoke", (req, res) => {
-  const { name, artist, album, album_cover_art, gid, category } =
-    req.body;
+  const { name, artist, album, album_cover_art, gid, category } = req.body;
 
   const karaoke = {
     name,
@@ -42,22 +41,39 @@ router.post("/add_karaoke", (req, res) => {
     gid: parseGid(gid),
     category,
     date_added: new Date().toLocaleDateString(),
+    views: 0,
   };
 
-  db.query("insert into all_karaoke SET ?", karaoke, (err, result) => {
-    if (err) {
-      res.status(500);
-      res.json({
-        ok: false,
-        message: "Error adding karaoke to database",
-      });
-      return;
+  db.query(
+    `select ${getItems} from all_karaoke where gid=?`,
+    [parseGid(gid)],
+    (err, result) => {
+      if (err) {
+        res.status(400).json({ ok: false, message: "Something went wrong!" });
+      } else {
+        if (result.length == 0) {
+          db.query("insert into all_karaoke SET ?", karaoke, (err, result1) => {
+            if (err) {
+              res.status(500);
+              res.json({
+                ok: false,
+                message: "Error adding karaoke to database",
+              });
+              return;
+            }
+            res.json({
+              ok: true,
+              message: "Karaoke added to database",
+            });
+          });
+        } else {
+          res
+            .status(400)
+            .json({ ok: false, message: "Karaoke already exists!" });
+        }
+      }
     }
-    res.json({
-      ok: true,
-      message: "Karaoke added to database",
-    });
-  });
+  );
 });
 
 // DELETE KARAOKE FROM DB
@@ -86,8 +102,7 @@ router.delete("/delete/:id", (req, res) => {
 
 // UPDATE KARAOKE
 router.patch("/update", (req, res) => {
-  const { kid, name, artist, album, album_cover_art, gid, category } =
-    req.body;
+  const { kid, name, artist, album, album_cover_art, gid, category } = req.body;
 
   const query =
     "update all_karaoke set name=?, artist=?,album=?,album_cover_art=?,gid=?,category=? where kid=?";

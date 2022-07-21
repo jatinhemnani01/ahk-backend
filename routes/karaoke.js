@@ -45,7 +45,7 @@ router.post("/add_karaoke", (req, res) => {
 
   db.query(
     `select ${getItems} from all_karaoke where gid=?`,
-    [parseGid(gid)],
+    [gid],
     (err, result) => {
       if (err) {
         res.status(400).json({ ok: false, message: "Something went wrong!" });
